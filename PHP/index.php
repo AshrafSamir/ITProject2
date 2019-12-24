@@ -78,7 +78,8 @@
             </ul>
             </div>
             <div class="col-sm-8 col-md-7 py-4">
-            <h4><a class="text-white btn btn-primary " role ="button" href="index.php?logout='1'" >Logout</a></h4> 
+            <h4 style="display: inline;"><a class="text-white btn btn-primary " role ="button" href="index.php?logout='1'" >Logout</a></h4>
+            <h4 style="display: inline;"><a class="text-white btn btn-primary " role ="button" href="selectAll.php" >Show Admins</a></h4>
             </div>
         </div>
         </div>
