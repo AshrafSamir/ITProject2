@@ -1,30 +1,4 @@
-
-<?php 
-  session_start(); 
-
-  if (!isset($_SESSION['username'])) {
-  	$_SESSION['msg'] = "You must log in first";
-  	header('location: login.php');
-  }
-  if (isset($_GET['logout'])) {
-  	session_destroy();
-  	unset($_SESSION['username']);
-  	header("location: login.php");
-  }
-?>
-
-<?php
-$id = $_GET['id'];
-$uname = $_GET['username'];
-$con = mysqli_connect('localhost', 'root', '', 'registration');
-
-mysqli_select_db($con,"registration");
-
-$q=mysqli_query($con,"select * from users where id=".$id);
-
-?>
-
-
+<?php include('server.php') ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,23 +6,26 @@ $q=mysqli_query($con,"select * from users where id=".$id);
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <body>
-  <title>Update system PHP and MySQL</title>
+  <title>Registration system PHP and MySQL</title>
   <link rel="stylesheet" type="text/css" href="../CSS/formStyle.css">
 </head>
 
   <div class="container">
-  <form action="update_ok.php" method="post" id="logg">
+  <form method="post" action="register.php" id="logg">
   	<div id="login-box">
+    <?php include('errors.php'); ?>
     <div class="logo">
     <!-- Logo here --> 
     </div>
     <div class="controls">
-  	  <input type="text" name="username" placeholder="Username" class="form-control input-group" >
-  	  <input type="email" name="email" placeholder="E-mail" class="form-control input-group" >
-      <input type="password" placeholder="Password" name="password_1" class="form-control input-group">
-      <input type="hidden" name="id" value="<?php echo $id?>">
-      <input type="hidden" name="uname" value="<?php echo $uname?>">
-      <button type="submit" class="btn-default btn-block btn-custom input-group" name="update">Update</button>
+  	  <input type="text" name="username" placeholder="Username" class="form-control input-group" value="<?php echo $username; ?>">
+  	  <input type="email" name="email" placeholder="E-mail" class="form-control input-group" value="<?php echo $email; ?>">
+  	  <input type="password" placeholder="Password" name="password_1" class="form-control input-group">
+  	  <input type="password" placeholder="Confirm password" name="password_2" class="form-control input-group">
+  	  <button type="submit" class="btn-default btn-block btn-custom input-group" name="reg_user">Register</button>
+  	<p style="color: white">
+  		Already have an account? <a href="login.php">Sign in</a>
+  </p>
     </div>
         </div>
   </form>

@@ -61,14 +61,13 @@ echo "<table border=2 width=100%>";
 					while ($row=mysqli_fetch_assoc($q))
 					{
 						$id=$row["id"];
-						$uname =$row["username"];
 						echo "<tr>";
 						
 						echo "<td>".$counter;
 						echo "<td>".$row["username"];
 						echo "<td>".$row["email"];
 						echo "<td>".$row["password"];
-						echo "<td><p data-placement='top' data-toggle='tooltip' title='Edit'><a href='update.php?id=$id&username=$uname' class='btn btn-primary btn-xs glyphicon glyphicon-pencil' data-title='Edit' data-toggle='modal' data-target='#edit' ><span></span></a></p></td>";
+						echo "<td><p data-placement='top' data-toggle='tooltip' title='Edit'><a href='update.php?id=$id' class='btn btn-primary btn-xs glyphicon glyphicon-pencil' data-title='Edit' data-toggle='modal' data-target='#edit' ><span></span></a></p></td>";
 						echo "<td><p data-placement='top' data-toggle='tooltip' title='Delete'><a href='delete.php?id=$id' class='btn btn-danger btn-xs glyphicon glyphicon-trash' data-title='Delete' data-toggle='modal' data-target='#delete' ><span></span></a></p>";
 						echo "</tr>";
 						$counter++;

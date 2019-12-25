@@ -15,7 +15,6 @@
 
 <?php
 $id = $_GET['id'];
-$uname = $_GET['username'];
 $con = mysqli_connect('localhost', 'root', '', 'registration');
 
 mysqli_select_db($con,"registration");
@@ -47,7 +46,6 @@ $q=mysqli_query($con,"select * from users where id=".$id);
   	  <input type="email" name="email" placeholder="E-mail" class="form-control input-group" >
       <input type="password" placeholder="Password" name="password_1" class="form-control input-group">
       <input type="hidden" name="id" value="<?php echo $id?>">
-      <input type="hidden" name="uname" value="<?php echo $uname?>">
       <button type="submit" class="btn-default btn-block btn-custom input-group" name="update">Update</button>
     </div>
         </div>

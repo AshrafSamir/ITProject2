@@ -17,7 +17,6 @@ if(isset($_POST['update'])){
 
 	
 $id = $_POST["id"];	
-$uname =$_POST["uname"];
 $username=$_POST["username"];
 $email=$_POST["email"];
 $password=$_POST["password_1"];
@@ -28,10 +27,6 @@ $con=mysqli_connect("localhost","root","","registration");
 
 
 $q=mysqli_query($con,"UPDATE users SET username = '$username', email = '$email', password = '$password' WHERE id = $id");
-$q=mysqli_query($con,"UPDATE game SET username = '$username' WHERE username = '$uname'");
-echo $uname;
-echo $username;
-
 if ($q)
 {
 	header("Location: selectAll.php");
