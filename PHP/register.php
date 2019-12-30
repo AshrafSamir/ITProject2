@@ -15,13 +15,17 @@
   	<div id="login-box">
     <?php include('errors.php'); ?>
     <div class="logo">
-    <!-- Logo here --> 
+     <img src="../Images/logo.png" id="logoImg" class="img img-responsive img-circle center-block"/>
     </div>
     <div class="controls">
-  	  <input type="text" name="username" placeholder="Username" class="form-control input-group" value="<?php echo $username; ?>">
-  	  <input type="email" name="email" placeholder="E-mail" class="form-control input-group" value="<?php echo $email; ?>">
-  	  <input type="password" placeholder="Password" name="password_1" class="form-control input-group">
-  	  <input type="password" placeholder="Confirm password" name="password_2" class="form-control input-group">
+      <h5 style="color: white;">Username</h5>
+      <input type="text" name="username" placeholder="Username" class="form-control input-group" value="<?php echo $username; ?>">
+      <h5 style="color: white;">Email</h5>
+      <input type="email" name="email" placeholder="E-mail" class="form-control input-group" value="<?php echo $email; ?>">
+      <h5 style="color: white;">Password</h5>
+      <input type="password" placeholder="Password" name="password_1" class="form-control input-group">
+      <h5 style="color: white;">Confirm password</h5>
+      <input type="password" placeholder="Confirm password" name="password_2" class="form-control input-group">
   	  <button type="submit" class="btn-default btn-block btn-custom input-group" name="reg_user">Register</button>
   	<p style="color: white">
   		Already have an account? <a href="login.php">Sign in</a>

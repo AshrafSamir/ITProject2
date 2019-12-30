@@ -1,4 +1,3 @@
-
 <?php
 
     session_start(); 
@@ -37,7 +36,7 @@
 
         if(mysqli_query($connect,$query)){
     
-        echo "File Sucessfully uploaded";
+            header("location: index.php");
         }
         else{
             echo "Error";
@@ -46,101 +45,176 @@
 
 ?>
 
-
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Colorlib Templates">
-    <meta name="author" content="Colorlib">
-    <meta name="keywords" content="Colorlib Templates">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-    <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
 
-    <!-- Icons font CSS-->
-    <link href="../vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="../vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Vendor CSS-->
-    <link href="../vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="../vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="../css/main.css" rel="stylesheet" media="all">
+  <title>Registration system PHP and MySQL</title>
+  <link rel="stylesheet" type="text/css" href="../CSS/formStyle.css">
+  <script type="text/javascript" src="../js/validate_insertion.js"></script>
 </head>
-
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
-                    <h2 class="title">NEW GAME</h2>
-                    <form method="POST" enctype="multipart/form-data">
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">game name</label>
-                                    <input class="input--style-4" type="text" name="game_name" id="game_name"/>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Game Image</label>
-                                    <input class="input--style-4" type="file" name="image" id="image"/>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Date</label>
-                                    <div class="input-group-icon">
-                                        <input  type="date" name="game_date" id="game_date"/>
-                                    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+	 <div class="container">
+  <form method="post" onsubmit="return display()" enctype="multipart/form-data" id="logg" >
+    <div id="login-box">
 
-                        <div class="input-group">
-                            <label class="label">Description</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                            <textarea class="input--style-4" name="game_desc" id="game_desc" rows="4" cols="50"></textarea>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" name="insert" id="insert" type="submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+     <div class="logo">
+     <img src="../Images/logo.png" id="logoImg" class="img img-responsive img-circle center-block"/>
     </div>
+    <div class="controls">
+        <span  id="error" class="noErrorHappen">*</span></label>
+        <h5 style="color: white;">Game name</h5>
+        <input class="input--style-4 form-control input-group" type="text" name="game_name" placeholder="Game Name" id="game_name"/>
 
-    <!-- Jquery JS-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="../vendor/select2/select2.min.js"></script>
-    <script src="../vendor/datepicker/moment.min.js"></script>
-    <script src="../vendor/datepicker/daterangepicker.js"></script>
+        <span  id="error1" class="noErrorHappen">*</span></label>
+        <h5 style="color: white;">Choose image</h5>
+        <input class="input--style-4 form-control input-group" type="file" name="image" placeholder="Game image" id="image"/>
 
-    <!-- Main JS-->
-    <script src="../JS/global.js"></script>
-    <script src="../JS/validate_insertion.js"></script>
+        <span  id="error2" class="noErrorHappen">*</span></label>
+        <h5 style="color: white;">Enter date</h5>
+        <input  type="date" class="input--style-4 form-control input-group" name="game_date" id="game_date"/>
 
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+        <span id="error3" class="noErrorHappen">*</span></label>
+        <h5 style="color: white;">Description</h5>
+        <textarea class="input--style-4" class="input--style-4 form-control input-group" name="game_desc" id="game_desc" rows="4" cols="41"></textarea>
+      
+        <button  class="btn-default btn-block btn-custom input-group" name="insert" id="insert" type="submit" >Insert</button>
+        <button type="button" class="btn-default btn-block btn-custom input-group"><a style="text-decoration: none;color:white;" href="index.php"  >Home</a></button>
+    </div>
+  </div>
+  </form>
+</div>
+  <div id="particles-js"></div>
 
+<script >
+  $.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js", function(){
+    particlesJS('particles-js',
+      {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#ffffff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            },
+            "image": {
+              "width": 100,
+              "height": 100
+            }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": false,
+            "anim": {
+              "enable": false,
+              "speed": 1,
+              "opacity_min": 0.1,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 5,
+            "random": true,
+            "anim": {
+              "enable": false,
+              "speed": 40,
+              "size_min": 0.1,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 6,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out",
+            "attract": {
+              "enable": false,
+              "rotateX": 600,
+              "rotateY": 1200
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "repulse"
+            },
+            "onclick": {
+              "enable": true,
+              "mode": "push"
+            },
+            "resize": true
+          },
+          "modes": {
+            "grab": {
+              "distance": 400,
+              "line_linked": {
+                "opacity": 1
+              }
+            },
+            "bubble": {
+              "distance": 400,
+              "size": 40,
+              "duration": 2,
+              "opacity": 8,
+              "speed": 3
+            },
+            "repulse": {
+              "distance": 200
+            },
+            "push": {
+              "particles_nb": 4
+            },
+            "remove": {
+              "particles_nb": 2
+            }
+          }
+        },
+        "retina_detect": true,
+        "config_demo": {
+          "hide_card": false,
+          "background_color": "#b61924",
+          "background_image": "",
+          "background_position": "50% 50%",
+          "background_repeat": "no-repeat",
+          "background_size": "cover"
+        }
+      }
+    );
+
+});
+
+</script>
+
+
+</body>
 </html>
-<!-- end document-->

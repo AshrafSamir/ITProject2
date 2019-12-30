@@ -2,20 +2,20 @@
   session_start(); 
 
   if (!isset($_SESSION['username'])) {
-  	$_SESSION['msg'] = "You must log in first";
-  	header('location: login.php');
+    $_SESSION['msg'] = "You must log in first";
+    header('location: login.php');
   }
   if (isset($_GET['logout'])) {
-  	session_destroy();
-  	unset($_SESSION['username']);
-  	header("location: login.php");
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: login.php");
   }
 
   $connect = mysqli_connect("localhost", "root", "", "registration");
 
   $username = $_SESSION['username'];
 
-  $result = mysqli_query($connect, "select * from game");
+  $result = mysqli_query($connect, "select * from game where username = '$username'");
 ?>
 
 <!doctype html>
@@ -79,7 +79,7 @@
             <div class="col-sm-4 offset-md-1 py-4">
             <h4 class="text-white">Contact</h4>
             <ul class="list-unstyled">
-                <li><a href="https://www.Twitter.com/" target="_blank" class="text-white">Follow on Twitter</a></li>
+               <li><a href="https://www.Twitter.com/" target="_blank" class="text-white">Follow on Twitter</a></li>
                 <li><a href="https://www.Facebook.com/" target="_blank" class="text-white">Like on Facebook</a></li>
                 <li><a href = "mailto: abc@example.com" target="_blank" class="text-white">Email me</a></li>
             </ul>
@@ -116,17 +116,22 @@
       <p style="margin:2% 5%;" class="lead text-muted"></p>
      <center> <p>
         <a href="index.php" class="btn btn-primary my-2">Home</a>
-        <a href="home.php" class="btn btn-primary my-2">Profile</a>
+        <a href="insertGame.php" class="btn btn-primary my-2">Insert Photo</a>
+        <?php 
+        if($_SESSION['admin']){
+          echo '<a href="selectAll.php" class="btn btn-secondary my-2">Show Users</a>' ;
+        }
+        ?>
         
       </p></center>
-      </div>
+    </div>
     </div>
   </section>
 
   <div style="margin:5% auto;" class="album py-5 ">
     <div class="container">
 
-      <div class="row">
+      <div style="position:relative;" class="row">
 
       <?php
 
@@ -140,19 +145,23 @@
             $name = $row['username'];
             $gamename = $row['game_name'];
             
-
-                echo'<div class="col-md-4">';
+              echo'<div class="col-md-4">';
                 echo'<div class="card mb-4 shadow-sm">';
-                echo'<center><p class="card-text">'; echo $name; echo '</p></center>';
+                 echo'<center><p class="card-text">'; echo $gamename; echo '</p></center>';
                   echo'<img src="'; echo $imageSource; echo '"alt="Bleach" width="100%" height="350" fill="#55595c">';
                     echo'<div class="card-body">';
-                        echo'<center><p class="card-text">'; echo $gamename; echo '</p></center>';
                         echo'<div class="d-flex justify-content-between align-items-center">';
+                        echo'<div class="btn-group">';
+                            echo'<button type="button" class="btn btn-sm btn-outline-secondary"><a href="view.php?id=';echo $id; echo'">View</a></button>';
+                            echo'<button type="button" class="btn btn-sm btn-outline-secondary"><a href="updateForm.php?id=';echo $id; echo'">Edit</a></button>';
+                            echo'<button  type="button" class="btn btn-sm btn-outline-secondary btn btn-danger "><a style="color:#FFFFFF; text-decoration:none;" href="dele.php?id=';echo $id; echo'">Delete</a></button>';
+                          echo'</div>';
                           echo'<small class="text-muted">'; echo $time; echo '</small>';
                           echo'</div>';
                         echo'</div>';
                     echo'</div>';
                 echo' </div>';
+
 
               }
         ?>
@@ -167,9 +176,10 @@
   <div class="container">
     <p class="float-right">
       <a href="#">Back to top</a>
-    </p>
-   <center> <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p>New to Bootstrap? <br><a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="/docs/4.4/getting-started/introduction/">getting started guide</a>.</p></center>
+    <center></p>
+    <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+    <p>New to Bootstrap? <a href="https://getbootstrap.com/"><br>Visit the homepage</a> or read our <a href="/docs/4.4/getting-started/introduction/">getting started guide</a>.</p>
+    </center>
   </div>
 </footer>
 

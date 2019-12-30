@@ -20,6 +20,10 @@ body, html {
   padding: 20px;
   z-index: 9999;
 }
+#logoImg{
+  width: 50%;
+  height: 50%;
+}
 #login-box .logo .logo-caption {
   font-family: 'Poiret One', cursive;
   color: white;
@@ -67,6 +71,11 @@ body, html {
   background: rgba(48, 46, 45, 1);
   border-color: #ff5252;
 }
+
+#login-box{
+  top: 8%;
+}
+
 #particles-js{
     width: 100%;
     height: 100%;
@@ -86,7 +95,25 @@ body, html {
   border-radius: 5px; 
   text-align: left;
 }
-
+.errorHappen {
+  display: block;
+  color: red;
+}
+.noErrorHappen {
+  display: block;
+}
+#error {
+    float: left;
+}
+#error1 {
+    float: left;
+}
+#error2 {
+    float: left;
+}
+#error3 {
+    float: left;
+}
 
 
 

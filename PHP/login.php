@@ -18,20 +18,21 @@
     <div id="login-box">
      <?php include('errors.php'); ?>
      <div class="logo">
-      <!-- logo here -->
+     <img src="../Images/logo.png" id="logoImg" class="img img-responsive img-circle center-block"/>
     </div>
     <div class="controls">
+    <span  id="error" class="noErrorHappen">*</span></label>
+    <h5 style="color: white;">Username</h5>
+  	<input type="text" id="username" name="username" placeholder="Username" class="form-control input-group"  >
+  	<span  id="error1" class="noErrorHappen">*</span></label>
+  	<h5 style="color: white;">Password</h5>
+  	<input type="password" id="password" name="password" placeholder="Password" class="form-control input-group" >
   	
-  		<input type="text" name="username" placeholder="Username" class="form-control input-group"  >
   	
+  	<button type="submit" class="btn-default btn-block btn-custom input-group" name="login_user">Login</button>
   	
-  		<input type="password" name="password" placeholder="Password" class="form-control input-group" >
-  	
-  	
-  		<button type="submit" class="btn-default btn-block btn-custom input-group" name="login_user">Login</button>
-  	
-  	<p style="color: white">
-      Create a new account? <a href="register.php">Sign up</a>
+  	<center><p style="color: white">
+      Create a new account? <a href="register.php"><br>Sign up</a></center>
     </p>
     </div>
   </div>

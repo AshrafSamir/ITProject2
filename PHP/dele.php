@@ -1,40 +1,100 @@
-<?php include('server.php') ?>
+
+<?php
+
+    session_start(); 
+
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: login.php');
+    }
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        unset($_SESSION['username']);
+        header("location: login.php");
+    }
+
+    $connect = mysqli_connect("localhost", "root", "", "registration");
+
+    $id=$_GET["id"];
+
+    $query=mysqli_query($connect,"select * from game where id=".$id);
+
+    if($query){
+    }
+    else{
+        echo "Error";
+    }
+    
+    $row=mysqli_fetch_assoc($query);
+
+    if(isset($_POST['dele']))
+    {
+
+    $id=$_GET["id"];
+
+    $query=mysqli_query($connect,"delete from game where id=".$id);
+
+    if($query){
+       header("location: home.php");
+    }
+    else{
+        echo "Error";
+    }
+
+
+    }
+     mysqli_close($connect);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<body>
+
+
   <title>Registration system PHP and MySQL</title>
   <link rel="stylesheet" type="text/css" href="../CSS/formStyle.css">
+  <script type="text/javascript" src="../JS/validate_insertion.js"></script>
 </head>
+<body>
 
-  <div class="container">
-  <form method="post" action="register.php" id="logg">
-  	<div id="login-box">
-    <?php include('errors.php'); ?>
-    <div class="logo">
-    <!-- Logo here --> 
+   
+   <div class="container">
+  <form method="post" onsubmit="return display()" enctype="multipart/form-data" id="logg" >
+    <div id="login-box">
+
+     <div class="logo">
+      <!-- logo here -->
     </div>
+    
     <div class="controls">
-  	  <input type="text" name="username" placeholder="Username" class="form-control input-group" value="<?php echo $username; ?>">
-  	  <input type="email" name="email" placeholder="E-mail" class="form-control input-group" value="<?php echo $email; ?>">
-  	  <input type="password" placeholder="Password" name="password_1" class="form-control input-group">
-  	  <input type="password" placeholder="Confirm password" name="password_2" class="form-control input-group">
-  	  <button type="submit" class="btn-default btn-block btn-custom input-group" name="reg_user">Register</button>
-  	<p style="color: white">
-  		Already have an account? <a href="login.php">Sign in</a>
-  </p>
+    
+      <!-- <input type="text" name="username" placeholder="Username" class="form-control input-group"  > -->
+      <?php
+      $image = "../Images/".$row['game_image'];
+        ?>
+        <label class="input--style-4 form-control input-group" type="text" name="game_name" id="game_name"><?php echo $row['game_name'] ?></label>
+        <img src=<?php echo $image; ?>  alt="Bleach" width="100%" height="350" fill="#55595c">
+
+        <label class="input--style-4 form-control input-group" type="file" name="game_disc" id="game_disc">des: <?php echo $row['game_disc'] ?></label>
+
+        <label class="input--style-4 form-control input-group" type="file" name="image_date" id="image_date">time: <?php echo $row['post_time'] ?></label>
+        <button  class="btn-default btn-block btn-custom input-group" name="dele" id="dele" type="submit" >Delete</button>
+
+        
+        
+  
     </div>
-        </div>
+  </div>
   </form>
 </div>
-    <div id="particles-js"></div>
+  <div id="particles-js"></div>
 
 
 
-  <script >
+<script >
   $.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js", function(){
     particlesJS('particles-js',
       {
@@ -155,7 +215,9 @@
     );
 
 });
+
 </script>
+
 
 </body>
 </html>

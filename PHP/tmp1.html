@@ -1,4 +1,50 @@
-<?php include('server.php') ?>
+<?php
+
+    session_start(); 
+
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: login.php');
+    }
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        unset($_SESSION['username']);
+        header("location: login.php");
+    }
+
+    $connect = mysqli_connect("localhost", "root", "", "registration");
+
+    if (isset($_POST['insert'])){
+
+        $game_name=$_POST["game_name"];
+        $game_date=$_POST["game_date"];
+        $game_desc=$_POST["game_desc"];
+        $username = $_SESSION['username'];
+        $file;
+        
+        if(isset($_FILES['image'])){
+            $file =  $_FILES['image']['name'];
+        }
+
+        $target_dir = "../Images/";
+        $target_file = $target_dir . basename($_FILES["image"]["name"]);
+
+        #sql query to insert into database
+        $query = "insert into game";
+        $query .= "(game_name, game_image, game_disc, post_time, username)";
+        $query .= " values('$game_name', '$file', '$game_desc', '$game_date', '$username')";
+
+        if(mysqli_query($connect,$query)){
+    
+        echo "File Sucessfully uploaded";
+        }
+        else{
+            echo "Error";
+        }
+        }
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +60,7 @@
 
    
 	 <div class="container">
-  <form method="post" action="login.php" id="logg" >
+  <form method="post"enctype="multipart/form-data" id="logg" >
     <div id="login-box">
      <?php include('errors.php'); ?>
      <div class="logo">
@@ -22,17 +68,15 @@
     </div>
     <div class="controls">
   	
-  		<input type="text" name="username" placeholder="Username" class="form-control input-group"  >
-  	
-  	
-  		<input type="password" name="password" placeholder="Password" class="form-control input-group" >
-  	
-  	
-  		<button type="submit" class="btn-default btn-block btn-custom input-group" name="login_user">Login</button>
-  	
-  	<p style="color: white">
-      Create a new account? <a href="register.php">Sign up</a>
-    </p>
+  		<!-- <input type="text" name="username" placeholder="Username" class="form-control input-group"  > -->
+        <input class="input--style-4 form-control input-group" type="text" name="game_name" placeholder="Game Name" id="game_name"/>
+        <input class="input--style-4 form-control input-group" type="file" name="image" placeholder="Game image" id="image"/>
+        <input  type="date" class="input--style-4 form-control input-group" name="game_date" id="game_date"/>
+        <h5 style="color: white;">Description</h5>
+        <textarea class="input--style-4" class="input--style-4 form-control input-group" name="game_desc" id="game_desc" rows="4" cols="41"></textarea>
+        <button  class="btn-default btn-block btn-custom input-group" name="insert" id="insert" type="submit">Insert</button>
+        <button href="index.php" class="btn-default btn-block btn-custom input-group" name="home"  >Home</button>
+  
     </div>
   </div>
   </form>

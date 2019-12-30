@@ -34,21 +34,32 @@ $q=mysqli_query($con,"select * from users where id=".$id);
 <body>
   <title>Update system PHP and MySQL</title>
   <link rel="stylesheet" type="text/css" href="../CSS/formStyle.css">
+  <script type="text/javascript" src="../js/validate_update.js"></script>
 </head>
 
   <div class="container">
-  <form action="update_ok.php" method="post" id="logg">
+  <form onsubmit="return display()" action="update_ok.php" method="post" id="logg">
   	<div id="login-box">
     <div class="logo">
-    <!-- Logo here --> 
+     <img src="../Images/logo.png" id="logoImg" class="img img-responsive img-circle center-block"/>
     </div>
     <div class="controls">
-  	  <input type="text" name="username" placeholder="Username" class="form-control input-group" >
-  	  <input type="email" name="email" placeholder="E-mail" class="form-control input-group" >
-      <input type="password" placeholder="Password" name="password_1" class="form-control input-group">
+      <span id="error" class="noErrorHappen">*</span></label>
+      <h5 style="color: white;">Username</h5>
+      <input type="text" name="username" placeholder="Username" id="username" class="form-control input-group" >
+
+      <span id="error1" class="noErrorHappen">*</span></label>
+      <h5 style="color: white;">Email</h5>
+      <input type="email" name="email" placeholder="E-mail" id="email" class="form-control input-group" >
+
+      <span id="error2" class="noErrorHappen">*</span></label>
+      <h5 style="color: white;">password</h5>
+      <input type="password" placeholder="Password" name="password_1" id="password_1" class="form-control input-group">
+
       <input type="hidden" name="id" value="<?php echo $id?>">
       <input type="hidden" name="uname" value="<?php echo $uname?>">
       <button type="submit" class="btn-default btn-block btn-custom input-group" name="update">Update</button>
+      <button type="button" class="btn-default btn-block btn-custom input-group"><a style="text-decoration: none;color:white;" href="home.php"  >Home</a></button>
     </div>
         </div>
   </form>

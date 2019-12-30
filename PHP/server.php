@@ -1,7 +1,9 @@
 <?php
+include("User.php");
 session_start();
 
 // initializing variables
+$user = new User();
 $username = "";
 $email    = "";
 $errors = array(); 
@@ -16,32 +18,13 @@ if (isset($_POST['reg_user'])) {
   $email = mysqli_real_escape_string($db, $_POST['email']);
   $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
   $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
+  $sql = "SELECT `admin` FROM `users` WHERE `username` = '$username'";
+  $admin = $db->query($sql);
+  $admin = $admin->fetch_assoc();
+  $admin = $admin['admin'];
+  $_SESSION['admin'] = $admin;
 
-  // form validation: ensure that the form is correctly filled ...
-  // by adding (array_push()) corresponding error unto $errors array
-  if (empty($username)) { array_push($errors, "Username is a required filed"); }
-  if (empty($email)) { array_push($errors, "Email is a required filed"); }
-  if (empty($password_1)) { array_push($errors, "Password is a required filed"); }
-  if ($password_1 != $password_2) {
-	array_push($errors, "Your password you entered don't match");
-  }
-
-  // first check the database to make sure 
-  // a user does not already exist with the same username and/or email
-  $user_check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
-  $result = mysqli_query($db, $user_check_query);
-  $user = mysqli_fetch_assoc($result);
-  
-  if ($user) { // if user exists
-    if ($user['username'] === $username) {
-      array_push($errors, "Username already exists");
-    }
-
-    if ($user['email'] === $email) {
-      array_push($errors, "Email already exists");
-    }
-  }
-
+  $errors = $user->register($username, $email, $password_1, $password_2,$errors, $db);
   // Finally, register user if there are no errors in the form
   if (count($errors) == 0) {
   	$password = md5($password_1);//encrypt the password before saving in the database
@@ -59,27 +42,24 @@ if (isset($_POST['reg_user'])) {
 
 // LOGIN USER
 if (isset($_POST['login_user'])) {
+
   $username = mysqli_real_escape_string($db, $_POST['username']);
   $password = mysqli_real_escape_string($db, $_POST['password']);
-
-  if (empty($username)) {
-    array_push($errors, "Username is a required filed");
-  }
-  if (empty($password)) {
-    array_push($errors, "Password is a required filed");
-  }
-
-  if (count($errors) == 0) {
-    $password = md5($password);
-    $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-    $results = mysqli_query($db, $query);
-    if (mysqli_num_rows($results) == 1) {
-      $_SESSION['username'] = $username;
-      $_SESSION['success'] = "You're now logged in";
-      header('location: index.php');
-    }else {
+  $sql = "SELECT `admin` FROM `users` WHERE `username` = '$username'";
+  $admin = $db->query($sql);
+  $admin = $admin->fetch_assoc();
+  $admin = $admin['admin'];
+  $_SESSION['admin'] = $admin;
+  $answer = $user->login($username, $password,$db,$errors);
+  
+  if ($answer == 1) {
+            
+    $_SESSION['username'] = $username;
+  
+    $_SESSION['success'] = "You're now logged in";
+    header('location: index.php');
+  }else {
       array_push($errors, "Wrong username/password combination");
-    }
   }
 }
 
